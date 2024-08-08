@@ -133,11 +133,11 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="{{curl}}/" class="nav-item nav-link active">Home</a>
-                            {% comment %} <a href="shop{{curl}}/" class="nav-item nav-link">shop</a> {% endcomment %}
+                            <a href="{{curl}}" class="nav-item nav-link active">Home</a>
+                            <a href="{{curl}}/shop" class="nav-item nav-link">shop</a>
                             <a href="{{curl}}/details" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                                <a href="{{curl}}/" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
                                     <a href="{{curl}}/cart" class="dropdown-item">Shopping Cart</a>
                                     <a href="{{curl}}/checkout" class="dropdown-item">Checkout</a>
@@ -323,7 +323,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                         <div class="card product-item border-0 mb-4">
                             <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                <img class="img-fluid w-100" src="{% static 'img/product-1.jpg' %}" alt="">
+                                <img class="img-fluid w-100"  src="{% static 'img/product-1.jpg' %}" alt="">
                             </div>
                             <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                 <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
