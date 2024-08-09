@@ -28,6 +28,7 @@ urlpatterns = [
     path('shop/', views.shop, name='shop'),
     path('login/', views.login, name='login'), 
     path('Register/', views.Register, name='Register'), 
-
-    
+    path('api/countries/', views.get_countries, name='get_countries'),
+    path('api/states/<str:country_code>/', views.get_states, name='get_states'),
+        
 ]

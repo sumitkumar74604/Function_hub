@@ -1,13 +1,17 @@
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, redirect
 from django.conf import settings
-from .models import UserRegistration, UserLogin, ContactMessage
+from .models import *
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login as auth_login
 from django.core.mail import send_mail
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
+import requests
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+curl = settings.CURRENT_URL 
 
 curl = settings.CURRENT_URL 
 
@@ -25,7 +29,6 @@ def details(request):
 
 def shop(request):
     return render(request, 'shop.html', {'curl': curl})
-
 
 @csrf_protect
 def contact(request):
@@ -80,6 +83,7 @@ def contact(request):
             return render(request, 'contact.html', {'curl': settings.CURRENT_URL, 'msg': msg})
     
     return render(request, 'contact.html', {'curl': settings.CURRENT_URL, 'msg': msg})
+
 @csrf_protect
 def login(request):
     msg = ""
@@ -93,7 +97,7 @@ def login(request):
             if user is not None:
                 auth_login(request, user)
                 msg = "Login successful!"
-                return render(request, 'login.html', {'curl': curl, 'msg': msg})  
+                return redirect('index')   
             else:
                 msg = "Invalid email or password."
                 return render(request, 'login.html', {'curl': curl, 'msg': msg})
@@ -101,7 +105,6 @@ def login(request):
         except Exception as e:
             msg = f"An error occurred: {str(e)}"
             return render(request, 'login.html', {'curl': curl, 'msg': msg})
-
     return render(request, 'login.html', {'curl': curl, 'msg': msg})
 
 @csrf_protect
@@ -145,3 +148,18 @@ def Register(request):
             return render(request, 'Register.html', {'curl': curl, 'msg': msg})
     
     return render(request, 'Register.html', {'curl': curl})
+
+def get_countries(request):
+    # Fetch countries from an external API
+    response = requests.get('https://restcountries.com/v3.1/all')
+    countries = response.json()
+    country_list = [{'name': country['name']['common'], 'code': country['cca2']} for country in countries]
+    return JsonResponse(country_list, safe=False)
+
+def get_states(request, country_code):
+    # Fetch states from the database based on the country code
+    country = get_object_or_404(Country, name=country_code)
+    states = State.objects.filter(country=country)
+    state_list = [{'name': state.name} for state in states]
+    return JsonResponse(state_list, safe=False)
+

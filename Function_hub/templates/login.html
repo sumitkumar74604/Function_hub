@@ -92,17 +92,20 @@
     <!-- Page Header End -->
 
     <!-- Login  messages-->
-    <div class="container-fluid pt-5">
+    <div class="container-fluid pt-0">
         <div class="row px-xl-5">
             <div class="col-lg-12">
-                <div id="message" class="mb-4">
-                  Login kar lo
+                <div id="message" class="mb-4" style="text-align:justify;">
+                    <!-- Display message if available -->
+                    {% if msg %}
+                    <p>{{ msg }}</p>
+                    {% endif %}
                 </div>
                 <!-- Login  messages End-->
-    
+
                 <!-- Login Form -->
-                <div class="mb-4" >
-                    <h4 class="font-weight-semi-bold mb-4" style="margin-left:45%;">Login</h4>
+                <div class="mb-3" >
+                    <h4 class="font-weight-semi-bold mb-4" style="margin-left:47%;">Login</h4>
                     <form action="{% url 'login' %}" method="post"> <!-- Adjust action URL based on your form handling -->
                         {% csrf_token %}
                         <div class="row">
@@ -121,10 +124,6 @@
                             <a href="{{curl}}/Register/" class="btn btn-primary">Registration</a>
                         </div>
                     </form>
-                      <!-- Display message if available -->
-                    {% if msg %}
-                     <p>{{ msg }}</p>
-                    {% endif %}
                 </div>
             </div>
         </div>
